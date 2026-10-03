@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | Smart Hostel Management System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(124, 58, 237, 0.15), transparent 30%),
+                radial-gradient(circle at 90% 20%, rgba(236, 72, 153, 0.12), transparent 30%),
+                linear-gradient(135deg, #f8f7ff, #fff7fb);
+            color: #27233a;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 72px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #6d28d9;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 11px;
+            color: #777;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            padding: 10px 17px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .dashboard-btn {
+            background: #f0eaff;
+            color: #6d28d9;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: min(1180px, 92%);
+            margin: 40px auto 70px;
+        }
+
+        /* HEADER */
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 600;
+            color: #241d3a;
+        }
+
+        .page-header p {
+            margin-top: 8px;
+            color: #777;
+            font-size: 15px;
+        }
+
+        /* PROFILE HERO */
+
+        .profile-hero {
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(109, 40, 217, 0.96),
+                    rgba(190, 24, 93, 0.90)
+                );
+
+            color: white;
+            border-radius: 28px;
+            padding: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+            margin-bottom: 25px;
+
+            box-shadow: 0 20px 50px rgba(109, 40, 217, 0.20);
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 34px;
+            font-weight: 700;
+
+            background: rgba(255, 255, 255, 0.20);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .profile-name {
+            font-family: "Playfair Display", serif;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .profile-id {
+            margin-top: 7px;
+            opacity: 0.85;
+            font-size: 14px;
+        }
+
+        .role-badge {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.65fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.88);
+            border: 1px solid rgba(124,58,237,0.10);
+            border-radius: 22px;
+            padding: 26px;
+            box-shadow: 0 12px 35px rgba(44, 30, 90, 0.07);
+        }
+
+        .card h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 23px;
+            font-weight: 600;
+            margin-bottom: 22px;
+            color: #342750;
+        }
+
+        /* INFORMATION */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 17px;
+        }
+
+        .info-item {
+            padding: 16px;
+            border-radius: 15px;
+            background: #faf8ff;
+            border: 1px solid #eee8ff;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #8b8498;
+            margin-bottom: 6px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #30283f;
+            word-break: break-word;
+        }
+
+        /* ROOM */
+
+        .room-box {
+            padding: 25px;
+            border-radius: 18px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4edff,
+                    #fff0f8
+                );
+            border: 1px solid #eadcff;
+            margin-bottom: 20px;
+        }
+
+        .room-label {
+            color: #7a7189;
+            font-size: 13px;
+        }
+
+        .room-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: #6d28d9;
+            margin: 5px 0;
+        }
+
+        .room-status {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* STATS */
+
+        .mini-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat {
+            padding: 18px;
+            border-radius: 17px;
+            background: #fff;
+            border: 1px solid #eee;
+        }
+
+        .stat-number {
+            font-size: 27px;
+            font-weight: 700;
+            color: #6d28d9;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        /* ACCOUNT */
+
+        .account-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding-bottom: 13px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .account-row:last-child {
+            border-bottom: none;
+        }
+
+        .account-row span:first-child {
+            color: #8a8394;
+            font-size: 13px;
+        }
+
+        .account-row span:last-child {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* LOADING */
+
+        .loading {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .error {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 14px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-hero {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 4%;
+            }
+
+            .nav-btn {
+                padding: 8px 11px;
+                font-size: 12px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .profile-hero {
+                padding: 24px;
+            }
+
+            .profile-left {
+                align-items: flex-start;
+            }
+
+            .avatar {
+                width: 70px;
+                height: 70px;
+                font-size: 27px;
+            }
+
+            .profile-name {
+                font-size: 25px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        SMART HOSTEL
+        <span>MANAGEMENT SYSTEM</span>
+    </div>
+
+    <div class="nav-actions">
+
+        <a href="dashboard.html" class="nav-btn dashboard-btn">
+            Dashboard
+        </a>
+
+        <button onclick="logout()" class="nav-btn logout-btn">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>My Profile</h1>
+
+        <p>
+            View your personal, hostel, account and activity information.
+        </p>
+
+    </div>
+
+
+    <!-- PROFILE HERO -->
+
+    <div class="profile-hero">
+
+        <div class="profile-left">
+
+            <div class="avatar" id="avatar">
+                A
+            </div>
+
+            <div>
+
+                <div class="profile-name" id="studentName">
+                    Loading...
+                </div>
+
+                <div class="profile-id">
+                    Student ID:
+                    <span id="studentId">-</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="role-badge">
+            Student Account
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <!-- PERSONAL INFORMATION -->
+
+        <div class="card">
+
+            <h2>Personal Information</h2>
+
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <div class="info-label">Student ID</div>
+                    <div class="info-value" id="infoStudentId">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Full Name</div>
+                    <div class="info-value" id="infoName">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value" id="infoEmail">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Phone</div>
+                    <div class="info-value" id="infoPhone">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Gender</div>
+                    <div class="info-value" id="infoGender">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Room Number</div>
+                    <div class="info-value" id="infoRoom">-</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HOSTEL INFORMATION -->
+
+        <div class="card">
+
+            <h2>Hostel Information</h2>
+
+            <div class="room-box">
+
+                <div class="room-label">
+                    Current Room
+                </div>
+
+                <div class="room-number" id="roomNumber">
+                    --
+                </div>
+
+                <span class="room-status" id="roomStatus">
+                    Loading
+                </span>
+
+            </div>
+
+            <div class="account-list">
+
+                <div class="account-row">
+                    <span>Allocation ID</span>
+                    <span id="allocationId">-</span>
+                </div>
+
+                <div class="account-row">
+                    <span>Allocation Date</span>
+                    <span id="allocationDate">-</span>
+                </div>
+
+                <div class="account-row">
+                    <span>Allocation Status</span>
+                    <span id="allocationStatus">-</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIVITY SUMMARY -->
+
+        <div class="card">
+
+            <h2>Activity Summary</h2>
+
+            <div class="mini-stats">
+
+                <div class="stat">
+
+                    <div class="stat-number" id="feeCount">
+                        -
+                    </div>
+
+                    <div class="stat-label">
+                        Fee Records
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <div class="stat-number" id="complaintCount">
+                        -
+                    </div>
+
+                    <div class="stat-label">
+                        Complaints
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <div class="stat-number" id="paidAmount">
+                        ₹0
+                    </div>
+
+                    <div class="stat-label">
+                        Paid Amount
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <div class="stat-number" id="pendingComplaints">
+                        -
+                    </div>
+
+                    <div class="stat-label">
+                        Pending Complaints
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACCOUNT INFORMATION -->
+
+        <div class="card">
+
+            <h2>Account Information</h2>
+
+            <div class="account-list">
+
+                <div class="account-row">
+                    <span>Login Email</span>
+                    <span id="accountEmail">-</span>
+                </div>
+
+                <div class="account-row">
+                    <span>User ID</span>
+                    <span id="accountUserId">-</span>
+                </div>
+
+                <div class="account-row">
+                    <span>Account Role</span>
+                    <span id="accountRole">Student</span>
+                </div>
+
+                <div class="account-row">
+                    <span>Student ID</span>
+                    <span id="accountStudentId">-</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="errorMessage"></div>
+
+</div>
+
+
+<script>
+
+const API = "http://localhost:3000/api";
+
+let allStudents = [];
+let allAllocations = [];
+let allFees = [];
+let allComplaints = [];
+
+const loggedUser =
+    JSON.parse(localStorage.getItem("user"));
+
+if (!loggedUser) {
+    window.location.href = "login.html";
+}
+
+
+/* DATE FORMAT */
+
+function formatDate(dateString) {
+
+    if (!dateString) return "-";
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) return "-";
+
+    return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    });
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    localStorage.removeItem("user");
+
+    window.location.href = "login.html";
+}
+
+
+/* LOAD ALL DATA */
+
+async function loadAllData() {
+
+    try {
+
+        const [
+            studentsResponse,
+            allocationsResponse,
+            feesResponse,
+            complaintsResponse
+        ] = await Promise.all([
+
+            fetch(`${API}/students`),
+
+            fetch(`${API}/allocations`),
+
+            fetch(`${API}/fees`),
+
+            fetch(`${API}/complaints`)
+
+        ]);
+
+
+        allStudents =
+            await studentsResponse.json();
+
+        allAllocations =
+            await allocationsResponse.json();
+
+        allFees =
+            await feesResponse.json();
+
+        allComplaints =
+            await complaintsResponse.json();
+
+
+        createStudentSelector();
+
+        if (allStudents.length > 0) {
+
+            showStudent(
+                allStudents[0].student_id
+            );
+
+        }
+
+    } catch (error) {
+
+        document.getElementById(
+            "errorMessage"
+        ).innerHTML = `
+            <div class="error">
+                Unable to load student information.
+                ${error.message}
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* CREATE STUDENT SELECTOR */
+
+function createStudentSelector() {
+
+    const header =
+        document.querySelector(".page-header");
+
+    const selector =
+        document.createElement("div");
+
+    selector.style.marginTop = "20px";
+
+    selector.innerHTML = `
+
+        <label
+            style="
+                display:block;
+                margin-bottom:8px;
+                font-size:13px;
+                color:#777;
+                font-weight:600;
+            "
+        >
+            Select Student
+        </label>
+
+        <select
+            id="studentSelector"
+            onchange="showStudent(this.value)"
+            style="
+                width:100%;
+                max-width:420px;
+                padding:13px 15px;
+                border-radius:13px;
+                border:1px solid #e5dcff;
+                background:white;
+                color:#35264d;
+                font-family:inherit;
+                font-size:14px;
+                outline:none;
+                cursor:pointer;
+            "
+        >
+
+            ${allStudents.map(student => `
+
+                <option
+                    value="${student.student_id}"
+                >
+                    ${student.name} — ${student.student_id}
+                </option>
+
+            `).join("")}
+
+        </select>
+
+    `;
+
+    header.appendChild(selector);
+
+}
+
+
+/* SHOW SELECTED STUDENT */
+
+function showStudent(studentId) {
+
+    const student =
+        allStudents.find(
+            s =>
+            String(s.student_id) ===
+            String(studentId)
+        );
+
+
+    if (!student) return;
+
+
+    /* PROFILE */
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        student.name || "-";
+
+
+    document.getElementById(
+        "studentId"
+    ).textContent =
+        student.student_id || "-";
+
+
+    document.getElementById(
+        "avatar"
+    ).textContent =
+        (student.name || "A")
+        .charAt(0)
+        .toUpperCase();
+
+
+    /* PERSONAL INFORMATION */
+
+    document.getElementById(
+        "infoStudentId"
+    ).textContent =
+        student.student_id || "-";
+
+
+    document.getElementById(
+        "infoName"
+    ).textContent =
+        student.name || "-";
+
+
+    document.getElementById(
+        "infoEmail"
+    ).textContent =
+        student.email || "-";
+
+
+    document.getElementById(
+        "infoPhone"
+    ).textContent =
+        student.phone || "-";
+
+
+    document.getElementById(
+        "infoGender"
+    ).textContent =
+        student.gender || "-";
+
+
+    document.getElementById(
+        "infoRoom"
+    ).textContent =
+        student.room_number || "-";
+
+
+    /* ACCOUNT */
+
+    document.getElementById(
+        "accountEmail"
+    ).textContent =
+        student.email || "-";
+
+
+    document.getElementById(
+        "accountUserId"
+    ).textContent =
+        student.student_id || "-";
+
+
+    document.getElementById(
+        "accountRole"
+    ).textContent =
+        "Student";
+
+
+    document.getElementById(
+        "accountStudentId"
+    ).textContent =
+        student.student_id || "-";
+
+
+    /* FIND ALLOCATION */
+
+    const allocation =
+        allAllocations.find(
+            a =>
+            String(a.student_id) ===
+            String(student.student_id)
+        );
+
+
+    if (allocation) {
+
+        document.getElementById(
+            "roomNumber"
+        ).textContent =
+            allocation.room_number || "-";
+
+
+        document.getElementById(
+            "allocationId"
+        ).textContent =
+            allocation.allocation_id || "-";
+
+
+        document.getElementById(
+            "allocationDate"
+        ).textContent =
+            formatDate(
+                allocation.allocation_date
+            );
+
+
+        document.getElementById(
+            "allocationStatus"
+        ).textContent =
+            allocation.status || "-";
+
+
+        document.getElementById(
+            "roomStatus"
+        ).textContent =
+            allocation.status || "-";
+
+    } else {
+
+        document.getElementById(
+            "roomNumber"
+        ).textContent =
+            student.room_number || "--";
+
+
+        document.getElementById(
+            "allocationId"
+        ).textContent =
+            "-";
+
+
+        document.getElementById(
+            "allocationDate"
+        ).textContent =
+            "-";
+
+
+        document.getElementById(
+            "allocationStatus"
+        ).textContent =
+            "Not Allocated";
+
+
+        document.getElementById(
+            "roomStatus"
+        ).textContent =
+            "Not Allocated";
+
+    }
+
+
+    /* FEES */
+
+    const studentFees =
+        allFees.filter(
+            f =>
+            String(f.student_id) ===
+            String(student.student_id)
+        );
+
+
+    document.getElementById(
+        "feeCount"
+    ).textContent =
+        studentFees.length;
+
+
+    const paidAmount =
+        studentFees
+        .filter(
+            f =>
+            String(f.status).toLowerCase() ===
+            "paid"
+        )
+        .reduce(
+            (sum, f) =>
+            sum + Number(f.amount || 0),
+            0
+        );
+
+
+    document.getElementById(
+        "paidAmount"
+    ).textContent =
+        "₹" +
+        paidAmount.toLocaleString("en-IN");
+
+
+    /* COMPLAINTS */
+
+    const studentComplaints =
+        allComplaints.filter(
+            c =>
+            String(c.student_id) ===
+            String(student.student_id)
+        );
+
+
+    document.getElementById(
+        "complaintCount"
+    ).textContent =
+        studentComplaints.length;
+
+
+    const pending =
+        studentComplaints.filter(
+            c =>
+            String(c.status).toLowerCase() !==
+            "resolved"
+        ).length;
+
+
+    document.getElementById(
+        "pendingComplaints"
+    ).textContent =
+        pending;
+
+}
+
+
+/* START */
+
+loadAllData();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Smart Hostel Management System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="login-page">
+
+    <div class="login-background">
+        <div class="login-orb orb-one"></div>
+        <div class="login-orb orb-two"></div>
+        <div class="login-orb orb-three"></div>
+    </div>
+
+
+    <!-- LOGIN CONTAINER -->
+
+    <main class="login-container">
+
+        <!-- LEFT SIDE -->
+
+        <section class="login-intro">
+
+            <a href="index.html" class="back-home">
+                ← Back to Home
+            </a>
+
+            <div class="login-brand">
+                <div class="login-logo">🏠</div>
+
+                <div>
+                    <span>SMART HOSTEL</span>
+                    <small>MANAGEMENT SYSTEM</small>
+                </div>
+            </div>
+
+            <div class="login-message">
+
+                <span class="login-label">
+                    WELCOME BACK
+                </span>
+
+                <h1>
+                    Manage your
+                    <em>hostel smarter.</em>
+                </h1>
+
+                <p>
+                    Access your hostel management dashboard
+                    and manage everything from one place.
+                </p>
+
+            </div>
+
+
+            <div class="login-features">
+
+                <div>
+                    <span>01</span>
+                    <p>Student Management</p>
+                </div>
+
+                <div>
+                    <span>02</span>
+                    <p>Room Allocation</p>
+                </div>
+
+                <div>
+                    <span>03</span>
+                    <p>Fees & Complaints</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOGIN CARD -->
+
+        <section class="login-card">
+
+            <div class="login-card-heading">
+
+                <span>SECURE ACCESS</span>
+
+                <h2>Sign in</h2>
+
+                <p>
+                    Enter your details to continue
+                </p>
+
+            </div>
+
+
+            <form id="loginForm">
+
+                <!-- EMAIL -->
+
+                <div class="input-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span>✉</span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span>⌑</span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle">
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="input-group">
+
+                    <label for="role">
+                        Login As
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span>♙</span>
+
+                        <select id="role" required>
+
+                            <option value="">
+                                Select your role
+                            </option>
+
+                            <option value="admin">
+                                Admin
+                            </option>
+
+                            <option value="warden">
+                                Warden
+                            </option>
+
+                            <option value="student">
+                                Student
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-submit">
+
+                    <span>Enter Dashboard</span>
+
+                    <span>→</span>
+
+                </button>
+
+
+                <div
+                    id="loginMessage"
+                    class="login-message-box">
+                </div>
+
+            </form>
+
+
+            <div class="login-footer">
+
+                <span>SMART HOSTEL</span>
+
+                <span>•</span>
+
+                <span>SECURE SYSTEM</span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        togglePassword.addEventListener("click", () => {
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+
+                togglePassword.textContent = "◉";
+
+            } else {
+
+                passwordInput.type = "password";
+
+                togglePassword.textContent = "○";
+            }
+
+        });
+
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+                const email =
+                    document.getElementById("email").value;
+
+                const password =
+                    document.getElementById("password").value;
+
+                const role =
+                    document.getElementById("role").value;
+
+                const message =
+                    document.getElementById("loginMessage");
+
+                message.textContent = "Signing in...";
+                message.className =
+                    "login-message-box loading";
+
+
+                try {
+
+                    const response = await fetch(
+                        "http://localhost:3000/api/auth/login",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                email,
+                                password,
+                                role
+                            })
+                        }
+                    );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (response.ok) {
+
+                        message.textContent =
+                            "Login successful! Opening dashboard...";
+
+                        message.className =
+                            "login-message-box success";
+
+
+                        localStorage.setItem(
+                            "user",
+                            JSON.stringify(data.user)
+                        );
+
+
+                        setTimeout(() => {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        }, 800);
+
+                    } else {
+
+                        message.textContent =
+                            data.error ||
+                            "Invalid login details.";
+
+                        message.className =
+                            "login-message-box error";
+                    }
+
+                } catch (error) {
+
+                    message.textContent =
+                        "Backend server is not running.";
+
+                    message.className =
+                        "login-message-box error";
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>

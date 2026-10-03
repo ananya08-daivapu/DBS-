@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Hostel Monitoring | Smart Hostel Management System
+    </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: "DM Sans", sans-serif;
+
+            min-height: 100vh;
+
+            color: #29233a;
+
+            background:
+                radial-gradient(
+                    circle at 8% 10%,
+                    rgba(124, 58, 237, 0.14),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 92% 15%,
+                    rgba(236, 72, 153, 0.13),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f8f7ff,
+                    #fff7fb
+                );
+
+        }
+
+
+        /* NAVBAR */
+
+        nav {
+
+            height: 72px;
+
+            padding: 0 6%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background:
+                rgba(255,255,255,0.88);
+
+            backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid
+                rgba(124,58,237,0.12);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .logo {
+
+            color: #6d28d9;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+        }
+
+
+        .logo span {
+
+            display: block;
+
+            color: #777;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            font-weight: 500;
+
+        }
+
+
+        .nav-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+
+        .nav-btn {
+
+            border: none;
+
+            text-decoration: none;
+
+            padding: 10px 16px;
+
+            border-radius: 12px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+        .dashboard-btn {
+
+            background: #f0eaff;
+
+            color: #6d28d9;
+
+        }
+
+
+        .logout-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            color: white;
+
+        }
+
+
+        .nav-btn:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* MAIN */
+
+        .container {
+
+            width: min(1200px, 92%);
+
+            margin: 42px auto 70px;
+
+        }
+
+
+        .page-header {
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .page-header h1 {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                clamp(34px, 5vw, 48px);
+
+            font-weight: 600;
+
+            color: #281f3c;
+
+        }
+
+
+        .page-header p {
+
+            color: #777;
+
+            margin-top: 8px;
+
+            font-size: 15px;
+
+        }
+
+
+        /* SUMMARY */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .summary-card {
+
+            background:
+                rgba(255,255,255,0.90);
+
+            border:
+                1px solid
+                rgba(124,58,237,0.10);
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(44,30,90,0.07);
+
+            transition: 0.3s;
+
+        }
+
+
+        .summary-card:hover {
+
+            transform:
+                translateY(-4px);
+
+        }
+
+
+        .summary-label {
+
+            color: #8b8498;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .summary-value {
+
+            font-size: 29px;
+
+            font-weight: 700;
+
+            color: #342750;
+
+        }
+
+
+        .total-value {
+
+            color: #7c3aed;
+
+        }
+
+
+        .occupied-value {
+
+            color: #db2777;
+
+        }
+
+
+        .available-value {
+
+            color: #16a34a;
+
+        }
+
+
+        .allocation-value {
+
+            color: #2563eb;
+
+        }
+
+
+        /* MAIN CARD */
+
+        .card {
+
+            background:
+                rgba(255,255,255,0.90);
+
+            border:
+                1px solid
+                rgba(124,58,237,0.10);
+
+            border-radius: 22px;
+
+            padding: 26px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(44,30,90,0.07);
+
+        }
+
+
+        .card-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .card h2 {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 24px;
+
+            font-weight: 600;
+
+            color: #342750;
+
+        }
+
+
+        .refresh-btn {
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            color: white;
+
+            padding: 10px 16px;
+
+            border-radius: 11px;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+        .refresh-btn:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* ROOM GRID */
+
+        .room-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+        }
+
+
+        .room-card {
+
+            position: relative;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            border:
+                1px solid
+                rgba(124,58,237,0.10);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #fbf8ff
+                );
+
+            transition: 0.3s;
+
+            overflow: hidden;
+
+        }
+
+
+        .room-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 90px;
+
+            height: 90px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124,58,237,0.08);
+
+            top: -35px;
+
+            right: -30px;
+
+        }
+
+
+        .room-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 12px 28px
+                rgba(70,40,120,0.10);
+
+        }
+
+
+        .room-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .room-number {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 25px;
+
+            font-weight: 600;
+
+            color: #33264e;
+
+        }
+
+
+        .room-status {
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+
+        .status-occupied {
+
+            background: #fce7f3;
+
+            color: #be185d;
+
+        }
+
+
+        .status-available {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        .status-partial {
+
+            background: #fef3c7;
+
+            color: #a16207;
+
+        }
+
+
+        .student-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+
+            min-height: 50px;
+
+        }
+
+
+        .student-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 9px;
+
+            border-radius: 10px;
+
+            background: #f8f6fc;
+
+        }
+
+
+        .student-icon {
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .student-info {
+
+            min-width: 0;
+
+        }
+
+
+        .student-name {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #40384d;
+
+        }
+
+
+        .student-id {
+
+            font-size: 10px;
+
+            color: #999;
+
+            margin-top: 2px;
+
+        }
+
+
+        .no-student {
+
+            color: #999;
+
+            font-size: 12px;
+
+            padding: 10px 0;
+
+        }
+
+
+        .room-footer {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 17px;
+
+            padding-top: 13px;
+
+            border-top:
+                1px solid #eee;
+
+        }
+
+
+        .occupancy-text {
+
+            color: #777;
+
+            font-size: 11px;
+
+        }
+
+
+        .view-btn {
+
+            border: none;
+
+            background: #f0eaff;
+
+            color: #6d28d9;
+
+            padding: 7px 10px;
+
+            border-radius: 9px;
+
+            font-family: inherit;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+
+        /* EMPTY */
+
+        .empty {
+
+            grid-column: 1 / -1;
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: #888;
+
+        }
+
+
+        .error {
+
+            padding: 15px;
+
+            margin-top: 20px;
+
+            border-radius: 12px;
+
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            font-size: 13px;
+
+        }
+
+
+        /* ACCESS */
+
+        .access-message {
+
+            display: none;
+
+            padding: 35px;
+
+            background:
+                rgba(255,255,255,0.92);
+
+            border:
+                1px solid
+                rgba(220,38,38,0.12);
+
+            border-radius: 20px;
+
+            color: #b91c1c;
+
+            text-align: center;
+
+        }
+
+
+        .access-message h2 {
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width:1000px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .room-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media(max-width:650px) {
+
+            nav {
+
+                padding: 0 4%;
+
+            }
+
+
+            .nav-btn {
+
+                padding: 8px 10px;
+
+                font-size: 11px;
+
+            }
+
+
+            .container {
+
+                width: 94%;
+
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .room-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .card-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+
+            SMART HOSTEL
+
+            <span>
+                MANAGEMENT SYSTEM
+            </span>
+
+        </div>
+
+
+        <div class="nav-actions">
+
+            <a
+                href="dashboard.html"
+                class="nav-btn dashboard-btn"
+            >
+                Dashboard
+            </a>
+
+
+            <button
+                class="nav-btn logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <h1>
+                Hostel Monitoring
+            </h1>
+
+            <p>
+                Monitor rooms, occupancy and current student allocations.
+            </p>
+
+        </div>
+
+
+
+        <!-- ACCESS MESSAGE -->
+
+        <div
+            id="accessMessage"
+            class="access-message"
+        >
+
+            <h2>
+                Warden Access Required
+            </h2>
+
+            <p>
+                This monitoring section is available for authorized hostel staff.
+            </p>
+
+        </div>
+
+
+
+        <!-- CONTENT -->
+
+        <div id="monitoringContent">
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary-grid">
+
+
+                <div class="summary-card">
+
+                    <div class="summary-label">
+                        Total Rooms
+                    </div>
+
+                    <div
+                        class="summary-value total-value"
+                        id="totalRooms"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-label">
+                        Occupied Rooms
+                    </div>
+
+                    <div
+                        class="summary-value occupied-value"
+                        id="occupiedRooms"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-label">
+                        Available Rooms
+                    </div>
+
+                    <div
+                        class="summary-value available-value"
+                        id="availableRooms"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-label">
+                        Active Allocations
+                    </div>
+
+                    <div
+                        class="summary-value allocation-value"
+                        id="activeAllocations"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ROOM MONITORING -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+                    <h2>
+                        Room Monitoring
+                    </h2>
+
+
+                    <button
+                        class="refresh-btn"
+                        onclick="loadMonitoring()"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="roomGrid"
+                    class="room-grid"
+                >
+
+                    <div class="empty">
+
+                        Loading hostel information...
+
+                    </div>
+
+                </div>
+
+
+                <div id="errorMessage"></div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+
+        const API =
+            "http://localhost:3000/api";
+
+
+        /* CURRENT USER */
+
+        const loggedUser =
+            JSON.parse(
+                localStorage.getItem("user")
+            );
+
+
+        /* LOGIN CHECK */
+
+        if (!loggedUser) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        /*
+            WARDEN ACCESS
+
+            Admin is also allowed to view
+            monitoring for project demonstration.
+        */
+
+        if (
+            loggedUser &&
+            loggedUser.role !== "warden" &&
+            loggedUser.role !== "admin"
+        ) {
+
+            document.getElementById(
+                "monitoringContent"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "accessMessage"
+            ).style.display = "block";
+
+        }
+
+
+        /* LOGOUT */
+
+        function logout() {
+
+            localStorage.removeItem("user");
+
+            window.location.href =
+                "login.html";
+
+        }
+
+
+        /* LOAD MONITORING */
+
+        async function loadMonitoring() {
+
+            if (
+                !loggedUser ||
+                (
+                    loggedUser.role !== "warden" &&
+                    loggedUser.role !== "admin"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+                document.getElementById(
+                    "errorMessage"
+                ).innerHTML = "";
+
+
+                const [
+                    roomsResponse,
+                    allocationsResponse,
+                    studentsResponse
+                ] = await Promise.all([
+
+                    fetch(`${API}/rooms`),
+
+                    fetch(`${API}/allocations`),
+
+                    fetch(`${API}/students`)
+
+                ]);
+
+
+                if (
+                    !roomsResponse.ok ||
+                    !allocationsResponse.ok ||
+                    !studentsResponse.ok
+                ) {
+
+                    throw new Error(
+                        "Unable to load hostel monitoring data."
+                    );
+
+                }
+
+
+                const rooms =
+                    await roomsResponse.json();
+
+
+                const allocations =
+                    await allocationsResponse.json();
+
+
+                const students =
+                    await studentsResponse.json();
+
+
+                updateSummary(
+                    rooms,
+                    allocations
+                );
+
+
+                displayRooms(
+                    rooms,
+                    allocations,
+                    students
+                );
+
+
+            }
+
+            catch (error) {
+
+                document.getElementById(
+                    "roomGrid"
+                ).innerHTML = `
+
+                    <div class="empty">
+
+                        Unable to load monitoring data.
+
+                    </div>
+
+                `;
+
+
+                document.getElementById(
+                    "errorMessage"
+                ).innerHTML = `
+
+                    <div class="error">
+
+                        ${error.message}
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* SUMMARY */
+
+        function updateSummary(
+            rooms,
+            allocations
+        ) {
+
+
+            const active =
+                allocations.filter(
+                    allocation =>
+                        String(
+                            allocation.status
+                        ).toLowerCase()
+                        === "active"
+                );
+
+
+            const occupiedRoomNumbers =
+                new Set(
+                    active.map(
+                        allocation =>
+                            String(
+                                allocation.room_number
+                            )
+                    )
+                );
+
+
+            document.getElementById(
+                "totalRooms"
+            ).textContent =
+                rooms.length;
+
+
+            document.getElementById(
+                "occupiedRooms"
+            ).textContent =
+                occupiedRoomNumbers.size;
+
+
+            document.getElementById(
+                "availableRooms"
+            ).textContent =
+                Math.max(
+                    rooms.length -
+                    occupiedRoomNumbers.size,
+                    0
+                );
+
+
+            document.getElementById(
+                "activeAllocations"
+            ).textContent =
+                active.length;
+
+        }
+
+
+        /* DISPLAY ROOMS */
+
+        function displayRooms(
+            rooms,
+            allocations,
+            students
+        ) {
+
+
+            const grid =
+                document.getElementById(
+                    "roomGrid"
+                );
+
+
+            if (!rooms.length) {
+
+                grid.innerHTML = `
+
+                    <div class="empty">
+
+                        No rooms found.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            /*
+                Only Active allocations
+                are shown.
+            */
+
+            const activeAllocations =
+                allocations.filter(
+                    allocation =>
+                        String(
+                            allocation.status
+                        ).toLowerCase()
+                        === "active"
+                );
+
+
+            grid.innerHTML =
+                rooms.map(room => {
+
+
+                    const roomNumber =
+                        String(
+                            room.room_number
+                        );
+
+
+                    const roomAllocations =
+                        activeAllocations.filter(
+                            allocation =>
+                                String(
+                                    allocation.room_number
+                                ) === roomNumber
+                        );
+
+
+                    const roomStudents =
+                        roomAllocations.map(
+                            allocation => {
+
+                                const student =
+                                    students.find(
+                                        s =>
+                                            String(
+                                                s.student_id
+                                            ) ===
+                                            String(
+                                                allocation.student_id
+                                            )
+                                    );
+
+                                return {
+                                    allocation,
+                                    student
+                                };
+
+                            }
+                        );
+
+
+                    let statusClass =
+                        "status-available";
+
+
+                    let statusText =
+                        "Available";
+
+
+                    if (
+                        roomStudents.length > 0
+                    ) {
+
+                        statusClass =
+                            "status-partial";
+
+                        statusText =
+                            "Partially Occupied";
+
+                    }
+
+
+                    /*
+                        If room capacity is available
+                        in the API, use it.
+                    */
+
+                    const capacity =
+                        Number(
+                            room.capacity
+                        ) || 1;
+
+
+                    if (
+                        roomStudents.length >=
+                        capacity
+                    ) {
+
+                        statusClass =
+                            "status-occupied";
+
+                        statusText =
+                            "Occupied";
+
+                    }
+
+
+                    const studentHTML =
+                        roomStudents.length
+                        ? roomStudents.map(
+                            item => {
+
+                                const student =
+                                    item.student;
+
+
+                                const name =
+                                    student
+                                    ? student.name
+                                    : "Unknown Student";
+
+
+                                const studentId =
+                                    student
+                                    ? student.student_id
+                                    : item.allocation.student_id;
+
+
+                                const initial =
+                                    name
+                                    .charAt(0)
+                                    .toUpperCase();
+
+
+                                return `
+
+                                    <div class="student-item">
+
+                                        <div class="student-icon">
+
+                                            ${initial}
+
+                                        </div>
+
+
+                                        <div class="student-info">
+
+                                            <div class="student-name">
+
+                                                ${name}
+
+                                            </div>
+
+                                            <div class="student-id">
+
+                                                ID: ${studentId}
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                `;
+
+                            }
+                        ).join("")
+                        : `
+
+                            <div class="no-student">
+
+                                No student currently allocated
+
+                            </div>
+
+                        `;
+
+
+                    return `
+
+                        <div class="room-card">
+
+
+                            <div class="room-top">
+
+                                <div class="room-number">
+
+                                    Room ${roomNumber}
+
+                                </div>
+
+
+                                <span
+                                    class="
+                                        room-status
+                                        ${statusClass}
+                                    "
+                                >
+
+                                    ${statusText}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="student-list">
+
+                                ${studentHTML}
+
+                            </div>
+
+
+                            <div class="room-footer">
+
+                                <span class="occupancy-text">
+
+                                    ${
+                                        roomStudents.length
+                                    }
+                                    /
+                                    ${
+                                        capacity
+                                    }
+                                    occupant(s)
+
+                                </span>
+
+
+                                <button
+                                    class="view-btn"
+                                    onclick="
+                                        viewRoom('${roomNumber}')
+                                    "
+                                >
+
+                                    View Room
+
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+        }
+
+
+        /* VIEW ROOM */
+
+        function viewRoom(roomNumber) {
+
+            window.location.href =
+                `rooms.html?room=${encodeURIComponent(roomNumber)}`;
+
+        }
+
+
+        /*
+            START MONITORING
+        */
+
+        if (
+            loggedUser &&
+            (
+                loggedUser.role === "warden" ||
+                loggedUser.role === "admin"
+            )
+        ) {
+
+            loadMonitoring();
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

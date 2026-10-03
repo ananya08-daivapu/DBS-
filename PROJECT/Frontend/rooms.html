@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Rooms - Smart Hostel Management System</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f3f8;
+            color: #30263a;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 65px;
+            background: #ffffff;
+            border-bottom: 1px solid #e4dce8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #572b72;
+        }
+
+        .logo span {
+            display: block;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #8a7c91;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #5d5065;
+            padding: 9px 13px;
+            border-radius: 7px;
+            font-size: 13px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: #eee4f4;
+            color: #642f82;
+        }
+
+        .logout {
+            border: none;
+            background: #542a6e;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        /* PAGE */
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 30px auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 600;
+            color: #35223f;
+        }
+
+        .page-header p {
+            margin-top: 7px;
+            color: #817587;
+            font-size: 13px;
+        }
+
+        /* SUMMARY */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e8e0ec;
+            border-radius: 13px;
+            padding: 20px;
+        }
+
+        .summary-title {
+            font-size: 12px;
+            color: #817587;
+        }
+
+        .summary-number {
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 8px;
+            color: #542a6e;
+        }
+
+        /* ROOM GRID */
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .room-card {
+            background: white;
+            border: 1px solid #e4dce8;
+            border-radius: 14px;
+            padding: 20px;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(72, 40, 91, .12);
+        }
+
+        .room-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .room-number {
+            font-size: 22px;
+            font-weight: 600;
+            color: #432354;
+        }
+
+        .status {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 20px;
+        }
+
+        .status.available {
+            color: #147748;
+            background: #e2f6eb;
+        }
+
+        .status.full {
+            color: #b22e4d;
+            background: #fde6ec;
+        }
+
+        .status.partial {
+            color: #9a6500;
+            background: #fff2cf;
+        }
+
+        .room-info {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .info {
+            background: #f8f5fa;
+            padding: 11px 7px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .info-number {
+            font-size: 17px;
+            font-weight: 600;
+            color: #4f2866;
+        }
+
+        .info-label {
+            font-size: 9px;
+            color: #8a7d91;
+            margin-top: 3px;
+        }
+
+        .view-btn {
+            width: 100%;
+            margin-top: 16px;
+            border: none;
+            padding: 10px;
+            border-radius: 7px;
+            background: #5a2e75;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .view-btn:hover {
+            background: #47215e;
+        }
+
+        /* OCCUPANT DOTS */
+
+        .people-section {
+            margin-top: 17px;
+        }
+
+        .people-title {
+            font-size: 11px;
+            color: #7d7085;
+            margin-bottom: 8px;
+        }
+
+        .people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .person {
+            background: #f1eaf5;
+            color: #59316d;
+            padding: 6px 9px;
+            border-radius: 6px;
+            font-size: 10px;
+        }
+
+        .available-person {
+            background: #e4f7ec;
+            color: #16784d;
+            padding: 6px 9px;
+            border-radius: 6px;
+            font-size: 10px;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .55;
+            }
+
+            100% {
+                opacity: 1;
+            }
+
+        }
+
+        /* EMPTY */
+
+        .empty {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 13px;
+            padding: 50px;
+            text-align: center;
+            color: #817587;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 18, 38, .65);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #472255;
+        }
+
+        .close {
+            border: none;
+            background: #eee7f1;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            color: #543064;
+        }
+
+        .modal-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .modal-stat {
+            background: #f7f3f9;
+            padding: 15px;
+            text-align: center;
+            border-radius: 9px;
+        }
+
+        .modal-stat strong {
+            display: block;
+            font-size: 21px;
+            color: #572b72;
+        }
+
+        .modal-stat span {
+            font-size: 10px;
+            color: #817587;
+        }
+
+        .student-row {
+            border: 1px solid #e6dfe9;
+            border-radius: 9px;
+            padding: 13px;
+            margin-bottom: 9px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .student-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #432354;
+        }
+
+        .student-id {
+            font-size: 10px;
+            color: #8a7c91;
+            margin-top: 4px;
+        }
+
+        .active {
+            color: #16804e;
+            background: #e2f6eb;
+            padding: 5px 8px;
+            border-radius: 15px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .no-students {
+            text-align: center;
+            padding: 25px;
+            background: #f5fbf7;
+            color: #268053;
+            border-radius: 9px;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .rooms-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .summary {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        SMART HOSTEL
+
+        <span>
+            MANAGEMENT SYSTEM
+        </span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="students.html">
+            Students
+        </a>
+
+        <a href="rooms.html"
+           class="active">
+            Rooms
+        </a>
+
+        <a href="allocation.html">
+            Allocation
+        </a>
+
+        <a href="fees.html">
+            Fees
+        </a>
+
+        <a href="complaints.html">
+            Complaints
+        </a>
+
+    </div>
+
+
+    <button
+        class="logout"
+        onclick="logout()">
+
+        Logout
+
+    </button>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="page-header">
+
+        <h1>
+            Room Management
+        </h1>
+
+        <p>
+            View room capacity, occupancy and available spaces.
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+
+        <div class="summary-card">
+
+            <div class="summary-title">
+                TOTAL ROOMS
+            </div>
+
+            <div
+                class="summary-number"
+                id="totalRooms">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-title">
+                OCCUPIED
+            </div>
+
+            <div
+                class="summary-number"
+                id="occupiedRooms">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-title">
+                AVAILABLE BEDS
+            </div>
+
+            <div
+                class="summary-number"
+                id="availableBeds">
+
+                0
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ROOMS -->
+
+    <div
+        class="rooms-grid"
+        id="roomsGrid">
+
+        <div class="empty">
+
+            Loading rooms...
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+    class="modal"
+    id="roomModal">
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-header">
+
+            <h2 id="modalRoomTitle">
+                Room
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-summary">
+
+
+            <div class="modal-stat">
+
+                <strong id="modalCapacity">
+                    0
+                </strong>
+
+                <span>
+                    Capacity
+                </span>
+
+            </div>
+
+
+            <div class="modal-stat">
+
+                <strong id="modalOccupied">
+                    0
+                </strong>
+
+                <span>
+                    Occupied
+                </span>
+
+            </div>
+
+
+            <div class="modal-stat">
+
+                <strong id="modalAvailable">
+                    0
+                </strong>
+
+                <span>
+                    Available
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div id="studentList">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   API
+===================================================== */
+
+const API_URL =
+    "http://localhost:3000/api";
+
+
+let rooms = [];
+
+
+/* =====================================================
+   LOAD ROOMS
+===================================================== */
+
+async function loadRooms() {
+
+    const grid =
+        document.getElementById(
+            "roomsGrid"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/rooms`
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load rooms"
+            );
+
+        }
+
+
+        rooms =
+            await response.json();
+
+
+        if (!Array.isArray(rooms)) {
+
+            rooms = [];
+
+        }
+
+
+        /*
+         * Get actual occupants
+         * from room_allocation
+         */
+
+        for (
+            const room of rooms
+        ) {
+
+            const roomNumber =
+                room.room_number ??
+                room.roomNumber ??
+                room.number;
+
+
+            room.room_number =
+                String(roomNumber);
+
+
+            room.capacity =
+                Number(
+                    room.capacity ??
+                    room.total_beds ??
+                    room.beds ??
+                    3
+                );
+
+
+            try {
+
+                const occupantResponse =
+                    await fetch(
+                        `${API_URL}/rooms/${encodeURIComponent(room.room_number)}/occupants`
+                    );
+
+
+                if (
+                    occupantResponse.ok
+                ) {
+
+                    room.occupants =
+                        await occupantResponse.json();
+
+                }
+
+                else {
+
+                    room.occupants = [];
+
+                }
+
+            }
+
+            catch(error) {
+
+                console.error(error);
+
+                room.occupants = [];
+
+            }
+
+
+            room.occupied =
+                room.occupants.length;
+
+
+            room.available =
+                Math.max(
+                    room.capacity -
+                    room.occupied,
+                    0
+                );
+
+        }
+
+
+        displaySummary();
+
+        displayRooms();
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+
+        grid.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    Unable to load room data
+                </h3>
+
+                <p style="margin-top:8px;">
+                    Make sure the backend server is running.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function displaySummary() {
+
+    let totalRooms =
+        rooms.length;
+
+
+    let occupiedRooms = 0;
+
+    let availableBeds = 0;
+
+
+    rooms.forEach(
+        room => {
+
+            if (
+                room.occupied > 0
+            ) {
+
+                occupiedRooms++;
+
+            }
+
+
+            availableBeds +=
+                room.available;
+
+        }
+    );
+
+
+    document.getElementById(
+        "totalRooms"
+    ).textContent =
+        totalRooms;
+
+
+    document.getElementById(
+        "occupiedRooms"
+    ).textContent =
+        occupiedRooms;
+
+
+    document.getElementById(
+        "availableBeds"
+    ).textContent =
+        availableBeds;
+
+}
+
+
+/* =====================================================
+   DISPLAY ROOMS
+===================================================== */
+
+function displayRooms() {
+
+    const grid =
+        document.getElementById(
+            "roomsGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if (
+        rooms.length === 0
+    ) {
+
+        grid.innerHTML = `
+
+            <div class="empty">
+
+                No rooms found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    rooms.forEach(
+        room => {
+
+
+            const occupied =
+                room.occupied;
+
+
+            const available =
+                room.available;
+
+
+            const capacity =
+                room.capacity;
+
+
+            let statusClass =
+                "available";
+
+
+            let statusText =
+                "AVAILABLE";
+
+
+            if (
+                occupied >= capacity
+            ) {
+
+                statusClass =
+                    "full";
+
+                statusText =
+                    "FULL";
+
+            }
+
+            else if (
+                occupied > 0
+            ) {
+
+                statusClass =
+                    "partial";
+
+                statusText =
+                    "PARTIALLY OCCUPIED";
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "room-card";
+
+
+            card.onclick =
+                function() {
+
+                    openRoom(
+                        room
+                    );
+
+                };
+
+
+            let peopleHTML =
+                "";
+
+
+            /*
+             * Show actual students
+             */
+
+            room.occupants
+                .forEach(
+                    student => {
+
+                        peopleHTML += `
+
+                            <span class="person">
+
+                                👤
+                                ${escapeHTML(
+                                    student.name ||
+                                    "Student"
+                                )}
+
+                            </span>
+
+                        `;
+
+                    }
+                );
+
+
+            /*
+             * Show available slots
+             */
+
+            for (
+                let i = 0;
+                i < available;
+                i++
+            ) {
+
+                peopleHTML += `
+
+                    <span class="available-person">
+
+                        🟢 AVAILABLE
+
+                    </span>
+
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="room-top">
+
+                    <div class="room-number">
+
+                        Room
+                        ${escapeHTML(
+                            room.room_number
+                        )}
+
+                    </div>
+
+
+                    <div
+                        class="
+                            status
+                            ${statusClass}
+                        ">
+
+                        ${statusText}
+
+                    </div>
+
+                </div>
+
+
+                <div class="room-info">
+
+
+                    <div class="info">
+
+                        <div class="info-number">
+
+                            ${capacity}
+
+                        </div>
+
+                        <div class="info-label">
+
+                            BEDS
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <div class="info-number">
+
+                            ${occupied}
+
+                        </div>
+
+                        <div class="info-label">
+
+                            OCCUPIED
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info">
+
+                        <div class="info-number">
+
+                            ${available}
+
+                        </div>
+
+                        <div class="info-label">
+
+                            AVAILABLE
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="people-section">
+
+                    <div class="people-title">
+
+                        ROOM STATUS
+
+                    </div>
+
+
+                    <div class="people">
+
+                        ${
+                            peopleHTML ||
+                            `
+                                <span class="available-person">
+                                    🟢 AVAILABLE
+                                </span>
+                            `
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="
+                        event.stopPropagation();
+                        openRoom(rooms.find(
+                            r =>
+                            r.room_number ===
+                            '${escapeJS(room.room_number)}'
+                        ));
+                    ">
+
+                    VIEW ROOM DETAILS
+
+                </button>
+
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   OPEN ROOM
+===================================================== */
+
+async function openRoom(room) {
+
+    if (!room) return;
+
+
+    document.getElementById(
+        "modalRoomTitle"
+    ).textContent =
+        `Room ${room.room_number}`;
+
+
+    document.getElementById(
+        "modalCapacity"
+    ).textContent =
+        room.capacity;
+
+
+    document.getElementById(
+        "modalOccupied"
+    ).textContent =
+        room.occupied;
+
+
+    document.getElementById(
+        "modalAvailable"
+    ).textContent =
+        room.available;
+
+
+    const studentList =
+        document.getElementById(
+            "studentList"
+        );
+
+
+    studentList.innerHTML = "";
+
+
+    /*
+     * NO OCCUPANTS
+     */
+
+    if (
+        room.occupants.length === 0
+    ) {
+
+        studentList.innerHTML = `
+
+            <div class="no-students">
+
+                🟢 No student allocated.
+
+                <br><br>
+
+                Room is completely available.
+
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * ACTUAL OCCUPANTS
+     */
+
+    room.occupants.forEach(
+        student => {
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "student-row";
+
+
+            row.innerHTML = `
+
+                <div>
+
+                    <div class="student-name">
+
+                        👤
+                        ${escapeHTML(
+                            student.name ||
+                            "Student"
+                        )}
+
+                    </div>
+
+
+                    <div class="student-id">
+
+                        Student ID:
+                        ${escapeHTML(
+                            String(
+                                student.student_id ||
+                                "-"
+                            )
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="active">
+
+                    ACTIVE
+
+                </div>
+
+            `;
+
+
+            studentList.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    /*
+     * AVAILABLE SLOTS
+     */
+
+    for (
+        let i = 0;
+        i < room.available;
+        i++
+    ) {
+
+        const availableRow =
+            document.createElement(
+                "div"
+            );
+
+
+        availableRow.className =
+            "student-row";
+
+
+        availableRow.innerHTML = `
+
+            <div>
+
+                <div
+                    class="student-name"
+                    style="color:#16804e;">
+
+                    🟢 Available Bed
+
+                </div>
+
+
+                <div class="student-id">
+
+                    This bed is available
+                    for allocation.
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="active"
+                style="
+                    color:#16804e;
+                    background:#e2f6eb;
+                ">
+
+                AVAILABLE
+
+            </div>
+
+        `;
+
+
+        studentList.appendChild(
+            availableRow
+        );
+
+    }
+
+
+    document.getElementById(
+        "roomModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal() {
+
+    document.getElementById(
+        "roomModal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE WHEN CLICK OUTSIDE
+===================================================== */
+
+document.getElementById(
+    "roomModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            this
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "user"
+    );
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeJS(value) {
+
+    return String(value)
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadRooms();
+
+</script>
+
+
+</body>
+
+</html>

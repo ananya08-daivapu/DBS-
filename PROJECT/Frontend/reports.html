@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports - Smart Hostel Management System</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap');
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: "DM Sans", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(139, 92, 246, 0.14),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(236, 72, 153, 0.12),
+                    transparent 30%
+                ),
+                #f8f7fc;
+
+            color: #28233b;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* ================= HEADER ================= */
+
+        header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6d28d9,
+                    #8b5cf6,
+                    #db2777
+                );
+
+            color: white;
+
+            padding: 28px 50px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 10px 30px rgba(91, 33, 182, 0.18);
+
+        }
+
+
+        .brand h1 {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 30px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        .brand p {
+
+            margin-top: 5px;
+
+            font-size: 13px;
+
+            opacity: 0.85;
+
+        }
+
+
+        .back-btn {
+
+            text-decoration: none;
+
+            color: white;
+
+            border: 1px solid rgba(255,255,255,0.35);
+
+            padding: 10px 18px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .back-btn:hover {
+
+            background: rgba(255,255,255,0.15);
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* ================= MAIN ================= */
+
+        main {
+
+            width: min(1200px, 92%);
+
+            margin: 40px auto 60px;
+
+        }
+
+
+        .page-title {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .page-title h2 {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 29px;
+
+            font-weight: 500;
+
+            color: #40376a;
+
+        }
+
+
+        .page-title p {
+
+            margin-top: 6px;
+
+            color: #77738a;
+
+            font-size: 14px;
+
+        }
+
+
+        /* ================= SUMMARY CARDS ================= */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .summary-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: rgba(255,255,255,0.88);
+
+            border: 1px solid #eeeaf7;
+
+            border-radius: 22px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 10px 30px rgba(30,20,70,0.06);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+
+        }
+
+
+        .summary-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 18px 35px rgba(91,33,182,0.12);
+
+        }
+
+
+        .summary-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 15px;
+
+            font-size: 22px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .purple {
+            background: #f1eaff;
+        }
+
+
+        .pink {
+            background: #ffe8f2;
+        }
+
+
+        .blue {
+            background: #e8f1ff;
+        }
+
+
+        .green {
+            background: #e8f8ef;
+        }
+
+
+        .summary-card h3 {
+
+            font-size: 28px;
+
+            font-weight: 600;
+
+            color: #30284b;
+
+        }
+
+
+        .summary-card p {
+
+            margin-top: 4px;
+
+            font-size: 13px;
+
+            color: #77738a;
+
+        }
+
+
+        /* ================= SECTIONS ================= */
+
+        .section {
+
+            background: rgba(255,255,255,0.9);
+
+            border: 1px solid #eeeaf7;
+
+            border-radius: 24px;
+
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 10px 30px rgba(30,20,70,0.05);
+
+        }
+
+
+        .section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .section-header h3 {
+
+            font-family: "Playfair Display", serif;
+
+            font-size: 23px;
+
+            font-weight: 500;
+
+            color: #40376a;
+
+        }
+
+
+        .section-header span {
+
+            font-size: 12px;
+
+            color: #8b5cf6;
+
+            background: #f3efff;
+
+            padding: 7px 12px;
+
+            border-radius: 10px;
+
+        }
+
+
+        /* ================= REPORT GRID ================= */
+
+        .report-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+        }
+
+
+        .report-item {
+
+            padding: 20px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #faf9ff,
+                    #f6f3ff
+                );
+
+            border: 1px solid #eeeaf7;
+
+        }
+
+
+        .report-item .label {
+
+            font-size: 13px;
+
+            color: #77738a;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .report-item .value {
+
+            font-size: 24px;
+
+            font-weight: 600;
+
+            color: #5b21b6;
+
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status-row {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+        }
+
+
+        .status {
+
+            padding: 17px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            background: #faf9ff;
+
+        }
+
+
+        .status strong {
+
+            display: block;
+
+            font-size: 23px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .status span {
+
+            font-size: 12px;
+
+            color: #77738a;
+
+        }
+
+
+        .pending strong {
+            color: #d97706;
+        }
+
+
+        .progress strong {
+            color: #7c3aed;
+        }
+
+
+        .resolved strong {
+            color: #16a34a;
+        }
+
+
+        .paid strong {
+            color: #059669;
+        }
+
+
+        /* ================= LOADING ================= */
+
+        #loading {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #77738a;
+
+            font-size: 14px;
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: #8a8599;
+
+            font-size: 12px;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .report-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .status-row {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            header {
+
+                padding: 22px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+
+            }
+
+
+            main {
+
+                width: 94%;
+
+            }
+
+
+            .summary-grid,
+            .report-grid,
+            .status-row {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .section {
+
+                padding: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <div class="brand">
+
+            <h1>Smart Hostel</h1>
+
+            <p>Management System • Reports</p>
+
+        </div>
+
+
+        <a
+            href="dashboard.html"
+            class="back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+
+        <div class="page-title">
+
+            <h2>Hostel Reports</h2>
+
+            <p>
+                Overview of students, rooms, allocations, fees and complaints.
+            </p>
+
+        </div>
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <div class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon purple">
+                    👨‍🎓
+                </div>
+
+                <h3 id="totalStudents">
+                    -
+                </h3>
+
+                <p>
+                    Total Students
+                </p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon pink">
+                    🏠
+                </div>
+
+                <h3 id="totalRooms">
+                    -
+                </h3>
+
+                <p>
+                    Total Rooms
+                </p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon blue">
+                    🔑
+                </div>
+
+                <h3 id="totalAllocations">
+                    -
+                </h3>
+
+                <p>
+                    Active Allocations
+                </p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    📝
+                </div>
+
+                <h3 id="totalComplaints">
+                    -
+                </h3>
+
+                <p>
+                    Total Complaints
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= HOSTEL OVERVIEW ================= -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h3>
+                    Hostel Overview
+                </h3>
+
+                <span>
+                    Live Data
+                </span>
+
+            </div>
+
+
+            <div class="report-grid">
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        Students
+                    </div>
+
+                    <div
+                        class="value"
+                        id="overviewStudents">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        Rooms
+                    </div>
+
+                    <div
+                        class="value"
+                        id="overviewRooms">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-item">
+
+                    <div class="label">
+                        Active Allocations
+                    </div>
+
+                    <div
+                        class="value"
+                        id="overviewAllocations">
+
+                        -
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FEE REPORT ================= -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h3>
+                    Fee Report
+                </h3>
+
+                <span>
+                    Payment Summary
+                </span>
+
+            </div>
+
+
+            <div class="status-row">
+
+
+                <div class="status">
+
+                    <strong id="totalFees">
+                        -
+                    </strong>
+
+                    <span>
+                        Total Fee Records
+                    </span>
+
+                </div>
+
+
+                <div class="status paid">
+
+                    <strong id="paidFees">
+                        -
+                    </strong>
+
+                    <span>
+                        Paid Records
+                    </span>
+
+                </div>
+
+
+                <div class="status pending">
+
+                    <strong id="pendingFees">
+                        -
+                    </strong>
+
+                    <span>
+                        Pending Records
+                    </span>
+
+                </div>
+
+
+                <div class="status">
+
+                    <strong id="feeAmount">
+                        ₹0
+                    </strong>
+
+                    <span>
+                        Total Fee Amount
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= COMPLAINT REPORT ================= -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h3>
+                    Complaint Report
+                </h3>
+
+                <span>
+                    Complaint Status
+                </span>
+
+            </div>
+
+
+            <div class="status-row">
+
+
+                <div class="status">
+
+                    <strong id="complaintTotal">
+                        -
+                    </strong>
+
+                    <span>
+                        Total
+                    </span>
+
+                </div>
+
+
+                <div class="status pending">
+
+                    <strong id="complaintPending">
+                        -
+                    </strong>
+
+                    <span>
+                        Pending
+                    </span>
+
+                </div>
+
+
+                <div class="status progress">
+
+                    <strong id="complaintProgress">
+                        -
+                    </strong>
+
+                    <span>
+                        In Progress
+                    </span>
+
+                </div>
+
+
+                <div class="status resolved">
+
+                    <strong id="complaintResolved">
+                        -
+                    </strong>
+
+                    <span>
+                        Resolved
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div id="loading">
+            Loading report data...
+        </div>
+
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        © 2026 Smart Hostel Management System
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        const API = "http://localhost:3000";
+
+
+        async function getData(endpoint) {
+
+            const response =
+                await fetch(API + endpoint);
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load " + endpoint
+                );
+
+            }
+
+            return await response.json();
+
+        }
+
+
+        async function loadReports() {
+
+            try {
+
+                const [
+                    students,
+                    rooms,
+                    allocations,
+                    complaints,
+                    fees
+                ] = await Promise.all([
+
+                    getData("/api/students"),
+
+                    getData("/api/rooms"),
+
+                    getData("/api/allocations"),
+
+                    getData("/api/complaints"),
+
+                    getData("/api/fees")
+
+                ]);
+
+
+                /* ================= STUDENTS ================= */
+
+                const studentCount =
+                    students.length;
+
+
+                document.getElementById(
+                    "totalStudents"
+                ).textContent =
+                    studentCount;
+
+
+                document.getElementById(
+                    "overviewStudents"
+                ).textContent =
+                    studentCount;
+
+
+                /* ================= ROOMS ================= */
+
+                const roomCount =
+                    rooms.length;
+
+
+                document.getElementById(
+                    "totalRooms"
+                ).textContent =
+                    roomCount;
+
+
+                document.getElementById(
+                    "overviewRooms"
+                ).textContent =
+                    roomCount;
+
+
+                /* ================= ALLOCATIONS ================= */
+
+                const activeAllocations =
+                    allocations.filter(
+                        item =>
+                            String(item.status)
+                                .toLowerCase()
+                                === "active"
+                    ).length;
+
+
+                document.getElementById(
+                    "totalAllocations"
+                ).textContent =
+                    activeAllocations;
+
+
+                document.getElementById(
+                    "overviewAllocations"
+                ).textContent =
+                    activeAllocations;
+
+
+                /* ================= COMPLAINTS ================= */
+
+                const totalComplaints =
+                    complaints.length;
+
+
+                const pendingComplaints =
+                    complaints.filter(
+                        item =>
+                            String(item.status)
+                                .toLowerCase()
+                                === "pending"
+                    ).length;
+
+
+                const progressComplaints =
+                    complaints.filter(
+                        item =>
+                            String(item.status)
+                                .toLowerCase()
+                                === "in progress"
+                    ).length;
+
+
+                const resolvedComplaints =
+                    complaints.filter(
+                        item =>
+                            String(item.status)
+                                .toLowerCase()
+                                === "resolved"
+                    ).length;
+
+
+                document.getElementById(
+                    "totalComplaints"
+                ).textContent =
+                    totalComplaints;
+
+
+                document.getElementById(
+                    "complaintTotal"
+                ).textContent =
+                    totalComplaints;
+
+
+                document.getElementById(
+                    "complaintPending"
+                ).textContent =
+                    pendingComplaints;
+
+
+                document.getElementById(
+                    "complaintProgress"
+                ).textContent =
+                    progressComplaints;
+
+
+                document.getElementById(
+                    "complaintResolved"
+                ).textContent =
+                    resolvedComplaints;
+
+
+                /* ================= FEES ================= */
+
+                const totalFeeRecords =
+                    fees.length;
+
+
+                const paidFees =
+                    fees.filter(
+                        item =>
+                            String(item.status)
+                                .toLowerCase()
+                                === "paid"
+                    ).length;
+
+
+                const pendingFees =
+                    fees.filter(
+                        item =>
+                            String(item.status)
+                                .toLowerCase()
+                                === "pending"
+                    ).length;
+
+
+                const totalAmount =
+                    fees.reduce(
+                        (sum, item) =>
+                            sum +
+                            Number(item.amount || 0),
+                        0
+                    );
+
+
+                document.getElementById(
+                    "totalFees"
+                ).textContent =
+                    totalFeeRecords;
+
+
+                document.getElementById(
+                    "paidFees"
+                ).textContent =
+                    paidFees;
+
+
+                document.getElementById(
+                    "pendingFees"
+                ).textContent =
+                    pendingFees;
+
+
+                document.getElementById(
+                    "feeAmount"
+                ).textContent =
+                    "₹" +
+                    totalAmount.toLocaleString(
+                        "en-IN"
+                    );
+
+
+                document.getElementById(
+                    "loading"
+                ).textContent =
+                    "Report data loaded successfully.";
+
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+
+                document.getElementById(
+                    "loading"
+                ).textContent =
+                    "Unable to load report data. Please make sure the backend server is running.";
+
+            }
+
+        }
+
+
+        loadReports();
+
+    </script>
+
+
+</body>
+
+</html>

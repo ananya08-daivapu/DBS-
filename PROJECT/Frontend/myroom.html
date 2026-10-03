@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Room | Smart Hostel Management System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(124, 58, 237, 0.14),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(236, 72, 153, 0.12),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f8f7ff,
+                    #fff7fb
+                );
+
+            color: #29233a;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 72px;
+
+            background:
+                rgba(255,255,255,0.86);
+
+            backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid rgba(124,58,237,0.12);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .logo {
+            color: #6d28d9;
+
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+        .logo span {
+            display: block;
+
+            color: #777;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            font-weight: 500;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+
+            border: none;
+
+            padding: 10px 16px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .dashboard-btn {
+            background: #f0eaff;
+            color: #6d28d9;
+        }
+
+        .logout-btn {
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: min(1150px, 92%);
+
+            margin: 42px auto 70px;
+        }
+
+        .page-header {
+            margin-bottom: 28px;
+        }
+
+        .page-header h1 {
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                clamp(34px, 5vw, 48px);
+
+            color: #281f3c;
+
+            font-weight: 600;
+        }
+
+        .page-header p {
+            color: #777;
+
+            margin-top: 8px;
+
+            font-size: 15px;
+        }
+
+        /* STUDENT SELECTOR */
+
+        .student-selector-box {
+            margin-top: 22px;
+        }
+
+        .student-selector-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+
+            color: #777;
+
+            font-weight: 600;
+        }
+
+        #studentSelector {
+            width: 100%;
+
+            max-width: 430px;
+
+            padding: 14px 16px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid #e5dcff;
+
+            background: white;
+
+            color: #35264d;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            outline: none;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 22px
+                rgba(80,50,130,0.06);
+
+            transition: 0.25s;
+        }
+
+        #studentSelector:hover {
+            border-color: #c4a7ff;
+        }
+
+        #studentSelector:focus {
+            border-color: #7c3aed;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(124,58,237,0.10);
+        }
+
+        /* HERO */
+
+        .room-hero {
+            background:
+                linear-gradient(
+                    120deg,
+                    #6d28d9,
+                    #c026d3,
+                    #ec4899
+                );
+
+            color: white;
+
+            border-radius: 28px;
+
+            padding: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 22px 55px
+                rgba(109,40,217,0.22);
+        }
+
+        .hero-label {
+            opacity: 0.82;
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+        }
+
+        .room-number {
+            font-size: 64px;
+
+            line-height: 1;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            margin-top: 12px;
+
+            opacity: 0.9;
+
+            font-size: 14px;
+        }
+
+        .status-badge {
+            background:
+                rgba(255,255,255,0.18);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.3);
+
+            padding: 11px 18px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 23px;
+        }
+
+        .card {
+            background:
+                rgba(255,255,255,0.90);
+
+            border:
+                1px solid
+                rgba(124,58,237,0.10);
+
+            border-radius: 22px;
+
+            padding: 26px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(44,30,90,0.07);
+        }
+
+        .card h2 {
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 23px;
+
+            font-weight: 600;
+
+            color: #342750;
+
+            margin-bottom: 21px;
+        }
+
+        /* DETAILS */
+
+        .details {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+        .detail {
+            padding: 16px;
+
+            border-radius: 15px;
+
+            background: #faf8ff;
+
+            border:
+                1px solid #eee8ff;
+        }
+
+        .detail-label {
+            color: #8b8498;
+
+            font-size: 12px;
+
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            color: #30283f;
+
+            font-weight: 600;
+
+            font-size: 15px;
+        }
+
+        /* OCCUPANCY */
+
+        .occupancy-box {
+            padding: 25px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4edff,
+                    #fff0f8
+                );
+
+            border:
+                1px solid #eadcff;
+
+            text-align: center;
+        }
+
+        .occupancy-number {
+            font-size: 46px;
+
+            font-weight: 700;
+
+            color: #6d28d9;
+        }
+
+        .occupancy-text {
+            color: #777;
+
+            font-size: 13px;
+
+            margin-top: 3px;
+        }
+
+        /* OCCUPANTS */
+
+        .occupants {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .occupant {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 14px;
+
+            border-radius: 15px;
+
+            background: #fafafa;
+
+            border: 1px solid #eee;
+
+            transition: 0.25s;
+        }
+
+        .occupant:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(60,40,100,0.07);
+        }
+
+        .occupant-avatar {
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+        .occupant-name {
+            font-weight: 700;
+
+            font-size: 14px;
+        }
+
+        .occupant-id {
+            color: #888;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+        .you {
+            margin-left: auto;
+
+            padding: 6px 9px;
+
+            background: #ede9fe;
+
+            color: #6d28d9;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        /* ERROR */
+
+        .error {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+        }
+
+        .empty {
+            color: #888;
+
+            font-size: 14px;
+
+            padding: 15px 0;
+        }
+
+        /* LOADING */
+
+        .loading {
+            color: #777;
+
+            font-size: 14px;
+
+            padding: 15px 0;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:800px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .room-hero {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+        }
+
+        @media(max-width:600px) {
+
+            nav {
+                padding: 0 4%;
+            }
+
+            .nav-btn {
+                padding:
+                    8px 10px;
+
+                font-size: 12px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .room-number {
+                font-size: 50px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            #studentSelector {
+                max-width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <div class="logo">
+
+        SMART HOSTEL
+
+        <span>
+            MANAGEMENT SYSTEM
+        </span>
+
+    </div>
+
+
+    <div class="nav-actions">
+
+        <a
+            href="dashboard.html"
+            class="nav-btn dashboard-btn"
+        >
+            Dashboard
+        </a>
+
+        <button
+            class="nav-btn logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <h1>
+            My Room
+        </h1>
+
+        <p>
+            View room allocation and room occupants.
+        </p>
+
+
+        <!-- STUDENT SELECTOR -->
+
+        <div class="student-selector-box">
+
+            <label
+                class="student-selector-label"
+                for="studentSelector"
+            >
+                Select Student
+            </label>
+
+
+            <select
+                id="studentSelector"
+                onchange="showStudentRoom(this.value)"
+            >
+
+                <option value="">
+                    Loading students...
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- ROOM HERO -->
+
+    <div class="room-hero">
+
+        <div>
+
+            <div class="hero-label">
+                CURRENT ROOM
+            </div>
+
+            <div
+                class="room-number"
+                id="roomNumber"
+            >
+                --
+            </div>
+
+            <div class="hero-subtitle">
+                Selected student's current hostel room
+            </div>
+
+        </div>
+
+
+        <div
+            class="status-badge"
+            id="roomStatus"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <!-- ALLOCATION DETAILS -->
+
+        <div class="card">
+
+            <h2>
+                Allocation Details
+            </h2>
+
+            <div class="details">
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Allocation ID
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="allocationId"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Student ID
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="studentId"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Student Name
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="studentName"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Allocation Date
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="allocationDate"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Room Number
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="detailRoom"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Allocation Status
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="allocationStatus"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- OCCUPANCY -->
+
+        <div class="card">
+
+            <h2>
+                Room Occupancy
+            </h2>
+
+            <div class="occupancy-box">
+
+                <div
+                    class="occupancy-number"
+                    id="occupancyNumber"
+                >
+                    0
+                </div>
+
+                <div class="occupancy-text">
+                    Current Occupants
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="details">
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Room
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="occupancyRoom"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Status
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="occupancyStatus"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OCCUPANTS -->
+
+        <div
+            class="card"
+            style="grid-column: 1 / -1;"
+        >
+
+            <h2>
+                Room Occupants
+            </h2>
+
+            <div
+                class="occupants"
+                id="occupantsList"
+            >
+
+                <div class="loading">
+                    Loading occupants...
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div id="errorMessage"></div>
+
+
+</div>
+
+
+<script>
+
+    const API =
+        "http://localhost:3000/api";
+
+
+    /* GET LOGGED USER */
+
+    const loggedUser =
+        JSON.parse(
+            localStorage.getItem("user")
+        );
+
+
+    /* LOGIN CHECK */
+
+    if (!loggedUser) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /* GLOBAL DATA */
+
+    let allStudents = [];
+
+    let allAllocations = [];
+
+
+    /* FORMAT DATE */
+
+    function formatDate(dateString) {
+
+        if (!dateString) {
+
+            return "-";
+
+        }
+
+        const date =
+            new Date(dateString);
+
+        if (isNaN(date.getTime())) {
+
+            return "-";
+
+        }
+
+        return date.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+    }
+
+
+    /* LOGOUT */
+
+    function logout() {
+
+        localStorage.removeItem("user");
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /* ERROR */
+
+    function showError(message) {
+
+        document.getElementById(
+            "errorMessage"
+        ).innerHTML = `
+            <div class="error">
+                ${message}
+            </div>
+        `;
+
+    }
+
+
+    /* RESET DISPLAY */
+
+    function resetRoomDisplay() {
+
+        document.getElementById(
+            "roomNumber"
+        ).textContent = "--";
+
+
+        document.getElementById(
+            "roomStatus"
+        ).textContent = "Not Allocated";
+
+
+        document.getElementById(
+            "allocationId"
+        ).textContent = "-";
+
+
+        document.getElementById(
+            "studentId"
+        ).textContent = "-";
+
+
+        document.getElementById(
+            "studentName"
+        ).textContent = "-";
+
+
+        document.getElementById(
+            "allocationDate"
+        ).textContent = "-";
+
+
+        document.getElementById(
+            "detailRoom"
+        ).textContent = "-";
+
+
+        document.getElementById(
+            "allocationStatus"
+        ).textContent = "Not Allocated";
+
+
+        document.getElementById(
+            "occupancyNumber"
+        ).textContent = "0";
+
+
+        document.getElementById(
+            "occupancyRoom"
+        ).textContent = "-";
+
+
+        document.getElementById(
+            "occupancyStatus"
+        ).textContent = "Not Allocated";
+
+
+        document.getElementById(
+            "occupantsList"
+        ).innerHTML = `
+            <div class="empty">
+                No active room allocation found.
+            </div>
+        `;
+
+    }
+
+
+    /* LOAD STUDENTS + ALLOCATIONS */
+
+    async function loadRoomData() {
+
+        try {
+
+            document.getElementById(
+                "errorMessage"
+            ).innerHTML = "";
+
+
+            /* GET STUDENTS */
+
+            const studentsResponse =
+                await fetch(
+                    `${API}/students`
+                );
+
+
+            if (!studentsResponse.ok) {
+
+                throw new Error(
+                    "Unable to load student information."
+                );
+
+            }
+
+
+            allStudents =
+                await studentsResponse.json();
+
+
+            /* GET ALLOCATIONS */
+
+            const allocationsResponse =
+                await fetch(
+                    `${API}/allocations`
+                );
+
+
+            if (!allocationsResponse.ok) {
+
+                throw new Error(
+                    "Unable to load room allocations."
+                );
+
+            }
+
+
+            allAllocations =
+                await allocationsResponse.json();
+
+
+            /* CHECK STUDENTS */
+
+            if (!Array.isArray(allStudents) ||
+                allStudents.length === 0) {
+
+                throw new Error(
+                    "No students found in the database."
+                );
+
+            }
+
+
+            /* CREATE DROPDOWN */
+
+            const selector =
+                document.getElementById(
+                    "studentSelector"
+                );
+
+
+            selector.innerHTML =
+                allStudents
+                .map(
+                    student => `
+
+                        <option
+                            value="${student.student_id}"
+                        >
+                            ${student.name}
+                            — 
+                            ${student.student_id}
+                        </option>
+
+                    `
+                )
+                .join("");
+
+
+            /*
+             * If logged-in user has student_id,
+             * select that student first.
+             *
+             * Otherwise select first student.
+             */
+
+            let selectedStudentId =
+                allStudents[0].student_id;
+
+
+            if (loggedUser &&
+                loggedUser.student_id) {
+
+                const loggedStudent =
+                    allStudents.find(
+                        student =>
+                        String(
+                            student.student_id
+                        ) ===
+                        String(
+                            loggedUser.student_id
+                        )
+                    );
+
+
+                if (loggedStudent) {
+
+                    selectedStudentId =
+                        loggedStudent.student_id;
+
+                }
+
+            }
+
+
+            selector.value =
+                selectedStudentId;
+
+
+            /* DISPLAY SELECTED STUDENT */
+
+            await showStudentRoom(
+                selectedStudentId
+            );
+
+
+        } catch (error) {
+
+            showError(
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* SHOW SELECTED STUDENT ROOM */
+
+    async function showStudentRoom(
+        studentId
+    ) {
+
+        try {
+
+            document.getElementById(
+                "errorMessage"
+            ).innerHTML = "";
+
+
+            /* FIND STUDENT */
+
+            const student =
+                allStudents.find(
+                    s =>
+                    String(s.student_id) ===
+                    String(studentId)
+                );
+
+
+            if (!student) {
+
+                throw new Error(
+                    "Selected student was not found."
+                );
+
+            }
+
+
+            /* FIND ACTIVE ALLOCATION */
+
+            const allocation =
+                allAllocations.find(
+                    a =>
+                    String(a.student_id) ===
+                    String(student.student_id) &&
+                    String(a.status).toLowerCase() ===
+                    "active"
+                );
+
+
+            /* NO ALLOCATION */
+
+            if (!allocation) {
+
+                resetRoomDisplay();
+
+
+                document.getElementById(
+                    "studentId"
+                ).textContent =
+                    student.student_id || "-";
+
+
+                document.getElementById(
+                    "studentName"
+                ).textContent =
+                    student.name || "-";
+
+
+                return;
+
+            }
+
+
+            const roomNumber =
+                allocation.room_number;
+
+
+            /* HERO */
+
+            document.getElementById(
+                "roomNumber"
+            ).textContent =
+                roomNumber;
+
+
+            document.getElementById(
+                "roomStatus"
+            ).textContent =
+                allocation.status;
+
+
+            /* ALLOCATION DETAILS */
+
+            document.getElementById(
+                "allocationId"
+            ).textContent =
+                allocation.allocation_id || "-";
+
+
+            document.getElementById(
+                "studentId"
+            ).textContent =
+                student.student_id || "-";
+
+
+            document.getElementById(
+                "studentName"
+            ).textContent =
+                student.name || "-";
+
+
+            document.getElementById(
+                "allocationDate"
+            ).textContent =
+                formatDate(
+                    allocation.allocation_date
+                );
+
+
+            document.getElementById(
+                "detailRoom"
+            ).textContent =
+                roomNumber;
+
+
+            document.getElementById(
+                "allocationStatus"
+            ).textContent =
+                allocation.status || "-";
+
+
+            /* GET ROOM OCCUPANTS */
+
+            const occupantsResponse =
+                await fetch(
+                    `${API}/rooms/${encodeURIComponent(roomNumber)}/occupants`
+                );
+
+
+            if (!occupantsResponse.ok) {
+
+                throw new Error(
+                    "Unable to load room occupants."
+                );
+
+            }
+
+
+            const occupants =
+                await occupantsResponse.json();
+
+
+            /* OCCUPANCY */
+
+            document.getElementById(
+                "occupancyNumber"
+            ).textContent =
+                occupants.length;
+
+
+            document.getElementById(
+                "occupancyRoom"
+            ).textContent =
+                roomNumber;
+
+
+            document.getElementById(
+                "occupancyStatus"
+            ).textContent =
+                allocation.status;
+
+
+            /* OCCUPANTS LIST */
+
+            const occupantsList =
+                document.getElementById(
+                    "occupantsList"
+                );
+
+
+            if (!occupants.length) {
+
+                occupantsList.innerHTML = `
+                    <div class="empty">
+                        No active occupants found.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            occupantsList.innerHTML =
+                occupants
+                .map(
+                    occupant => {
+
+                        const initial =
+                            (occupant.name || "A")
+                            .charAt(0)
+                            .toUpperCase();
+
+
+                        const isSelected =
+                            String(
+                                occupant.student_id
+                            ) ===
+                            String(
+                                student.student_id
+                            );
+
+
+                        return `
+
+                            <div class="occupant">
+
+                                <div class="occupant-avatar">
+                                    ${initial}
+                                </div>
+
+                                <div>
+
+                                    <div class="occupant-name">
+                                        ${occupant.name || "-"}
+                                    </div>
+
+                                    <div class="occupant-id">
+                                        Student ID:
+                                        ${occupant.student_id || "-"}
+                                    </div>
+
+                                </div>
+
+                                ${
+                                    isSelected
+                                    ?
+                                    `<div class="you">
+                                        SELECTED
+                                    </div>`
+                                    :
+                                    ""
+                                }
+
+                            </div>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+
+        } catch (error) {
+
+            showError(
+                error.message
+            );
+
+        }
+
+    }
+
+
+    /* START */
+
+    loadRoomData();
+
+</script>
+
+
+</body>
+</html>
